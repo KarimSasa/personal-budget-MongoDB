@@ -173,15 +173,16 @@
         }
 
         function getBudget() {
-            axios.get('http://localhost:3000/budget')
-            .then(function (res) {
-                for (var i = 0; i < res.data.myBudget.length; i++) {
-                    dataSource.datasets[0].data[i] = res.data.myBudget[i].budget;
-                    dataSource.labels[i] = res.data.myBudget[i].title;
-                }
-                createChart();
-            });
-        }
+                axios.get('http://localhost:3000/budget')
+                    .then(function (res) {
+                        for (var i = 0; i < res.data.myBudget.length; i++) {
+                            dataSource.datasets[0].data[i] = res.data.myBudget[i].budget;
+                            dataSource.labels[i] = res.data.myBudget[i].title;
+                            dataSource.datasets[0].backgroundColor[i] = res.data.myBudget[i].color; 
+                        }
+                        createChart(); 
+                    });
+            }
         getBudget();
     </script>
 
@@ -238,7 +239,7 @@
 
         var color = d3.scaleOrdinal()
             .domain(data.map(function(d) { return d.title; }))
-            .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+            .range(data.map(function(d) { return d.color; })); 
 
         change(data);
 
